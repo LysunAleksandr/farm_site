@@ -1,7 +1,4 @@
 
-pizzeria showcase
-https://github.com/LysunAleksandr/crt-symfony-4.git
-
 #to install:
 
 docker-compose up --build -d
