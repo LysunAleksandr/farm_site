@@ -1,7 +1,7 @@
 version: '3.8'
 
 volumes:
-  database:
+  database1:
     driver: 'local'
 
 services:
@@ -37,7 +37,7 @@ services:
     restart: always
     volumes:
       - ./docker/dev/databse/:/docker-entrypoint-initdb.d/
-      - database:/var/lib/postgresql/data
+      - database1:/var/lib/postgresql/data
     ports: 
      - 5432:5432
     environment:
@@ -45,23 +45,3 @@ services:
       POSTGRES_PASSWORD: webmaster
       POSTGRES_DB: symfony
       PGDATA: /var/lib/postgresql/data/pgdata
-
-  databasetest:
-    image: postgres:11-alpine
-    restart: always
-    volumes:
-      - ./docker/dev/databse/:/docker-entrypoint-initdb.d/
-      - database:/var/lib/postgresql/data
-    ports:
-      - 5433:5432
-    environment:
-      POSTGRES_USER: webmaster
-      POSTGRES_PASSWORD: webmaster
-      POSTGRES_DB: symfony
-      PGDATA: /var/lib/postgresql/data/pgdata
-
-  rabbitmq:
-    image: rabbitmq:3.7-management
-    ports:
-      - 5672:5672
-      - 15672:15672

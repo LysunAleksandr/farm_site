@@ -30,7 +30,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Blog');
+            ->setTitle('Online garden');
     }
 
     public function configureMenuItems(): iterable
@@ -38,7 +38,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linktoRoute('Back to the website', 'fas fa-home', 'homepage');
         yield MenuItem::linkToCrud('Catalog', 'fas fa-list', Catalog::class);
-        yield MenuItem::linkToCrud('Ingridients', 'fas fa-list', Ingridient::class);
         yield MenuItem::linkToCrud('Order', 'fas fa-list', Order::class);
         yield MenuItem::linkToCrud('ClientContact', 'fas fa-list', ClientContact::class);
         if( $this->isGranted('ROLE_ADMIN')) {

@@ -1,7 +1,11 @@
 
 #to install:
 
-docker-compose up --build -d
+export PUID=$(id -u)
+export PGID=$(id -g)
+docker-compose build
+
+docker-compose up  -d
 
 docker-compose exec app composer install
 
