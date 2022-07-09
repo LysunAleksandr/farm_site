@@ -1,0 +1,24 @@
+{% extends '../base.html.twig' %}
+
+{% block title %}Pizza - {{ catalog_unit.title }}{% endblock %}
+
+{% block body %}
+
+    <h1> {{ catalog_unit.title }}  </h1>
+    <h4> Price {{ catalog_unit.price}} </h4>
+    {% if catalog_unit.photofilename %}
+        <img src="{{ asset('uploads/photos/' ~ catalog_unit.photofilename) }}" />
+    {% endif %}
+    <h3> {{ catalog_unit.description }} </h3>
+
+    {% if  ingridients |length > 0 %}
+        <h3>Ingridients: </h3>
+    {% endif %}
+    {% for ingridient in ingridients %}
+        <h4>{{ ingridient }} </a></h4>
+
+    {% endfor %}
+
+        <h2>Add in basket</h2>
+    {{ form(add_basket_form) }}
+{% endblock %}

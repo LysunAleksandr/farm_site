@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order{% endblock %}
+
+{% block body %}
+    <h2>Order</h2>
+
+    {% for basket_position in basket_positions %}
+        <h4>{{ basket_position }}  </a></h4>
+    {% endfor %}
+
+    <h2> Total products:  {{ totalQuantity }}  Total price: {{ totalPrice }} </h2>
+
+    {% if  basket_positions|length > 0 %}
+        {{ form(add_order_form) }}
+
+    {% endif %}
+
+    {% if previous >= 0 %}
+        <a href="{{ path('basket', {  offset: previous }) }}">Previous</a>
+    {% endif %}
+    {% if next < basket_positions|length %}
+        <a href="{{ path('basket', {  offset: next }) }}">Next</a>
+    {% endif %}
+
+{% endblock %}

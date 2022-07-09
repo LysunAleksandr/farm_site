@@ -1,0 +1,16 @@
+api_platform:
+    title: 'pizzeria showcase api'
+    description: 'pizzeria showcase api'
+    version: 1.0.0
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+    patch_formats:
+        json: ['application/merge-patch+json']
+    swagger:
+        versions: [3]
+        api_keys:
+            apiKey:
+                name: Authorization
+                type: header
+    exception_to_status:
+        App\Exception\BasketPositionNotFoundException: 404

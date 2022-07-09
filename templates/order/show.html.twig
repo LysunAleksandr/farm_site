@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ordered{% endblock %}
+
+{% block body %}
+    <h2>Order successfully accepted</h2>
+      {{ order }}
+
+
+    {% for basket_position in basket_positions %}
+        <h4>{{ basket_position }}  </a></h4>
+    {% endfor %}
+
+    <h2> Total products:  {{ totalQuantity }}  Total price: {{ totalPrice }} </h2>
+
+    <h3>Username: {{ username }}</h3>
+    <h3>Delivery adress: {{ delivery_adress }}</h3>
+    <h3>Telephone: {{ telephone }}</h3>
+
+    <a href="{{ path('homepage') }}">Return to catalog</a>
+
+    {% if previous >= 0 %}
+        <a href="{{ path('basket', {  offset: previous }) }}">Previous</a>
+    {% endif %}
+    {% if next < basket_positions|length %}
+        <a href="{{ path('basket', {  offset: next }) }}">Next</a>
+    {% endif %}
+
+{% endblock %}

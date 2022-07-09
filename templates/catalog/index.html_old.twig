@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CATALOG{% endblock %}
+
+{% block body %}
+
+    <h2>Pizza! </h2>
+
+    {% for catalog in catalogs %}
+        <h3>{{ catalog }}  </a></h3>
+        <h4> Price {{ catalog.price}} </h4>
+        {% if catalog.photofilename %}
+            <img src="{{ asset('uploads/photos/' ~ catalog.photofilename) }}" />
+        {% endif %}
+        <p>
+            <a href="{{ path('pizza', { id: catalog.id }) }}">View</a>
+        </p>
+    {% endfor %}
+
+    {% if previous >= 0 %}
+        <a href="{{ path('homepage', {  offset: previous }) }}">Previous</a>
+    {% endif %}
+    {% if next < catalogs|length %}
+        <a href="{{ path('homepage', {  offset: next }) }}">Next</a>
+    {% endif %}
+{% endblock %}
