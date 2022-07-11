@@ -109,7 +109,7 @@
                         <td>
                             <div class="media">
                                 <div class="d-flex">
-                                    <img src="img/product/single-product/cart-1.jpg" alt="">
+
                                 </div>
                                 <div class="media-body">
                                     <p>{{ basket_position.title }}</p>
@@ -180,8 +180,8 @@
                         </td>
                         <td>
                             <div class="checkout_btn_inner">
-                                <a class="gray_btn" href="#">Continue Shopping</a>
-                                <a class="main_btn" href="#">Proceed to checkout</a>
+                                <a class="gray_btn" href={{ path('catalog') }}>Continue Shopping</a>
+                                <a class="main_btn" href={{ path('order') }}>Proceed to checkout</a>
                             </div>
                         </td>
                     </tr>
