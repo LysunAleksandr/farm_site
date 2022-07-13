@@ -42,12 +42,6 @@ class Catalog
      */
     private ?string $description;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Ingridient::class)
-     */
-    private  $Ingr;
-
-
 
     public function __construct()
     {
@@ -114,30 +108,5 @@ class Catalog
     {
         return $this->title;// . ' ' . $this->description;
     }
-
-     /**
-     * @return Collection|Ingridient[]
-     */
-    public function getIngr(): Collection
-    {
-        return $this->Ingr;
-    }
-
-    public function addIngr(Ingridient $ingr): self
-    {
-        if (!$this->Ingr->contains($ingr)) {
-            $this->Ingr[] = $ingr;
-        }
-
-        return $this;
-    }
-
-    public function removeIngr(Ingridient $ingr): self
-    {
-        $this->Ingr->removeElement($ingr);
-
-        return $this;
-    }
-
 
 }

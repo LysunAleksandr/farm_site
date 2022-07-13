@@ -8,9 +8,8 @@ use App\Entity\Catalog;
 use App\Form\BasketPositionFormType;
 use App\Repository\BasketPositionRepository;
 use App\Repository\CatalogRepository;
+use App\Repository\RentBedsRepository;
 use App\Service\BasketCalcInterface;
-use App\Service\BasketCalculator;
-use App\Service\CustomMakerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,6 +87,5 @@ class CatalogController extends AbstractController
         return new Response($this->twig->render('about.html.twig'));
 
     }
-
 
 }

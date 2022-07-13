@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20211221112027 extends AbstractMigration
+final class Version20220713123043 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,14 +20,14 @@ final class Version20211221112027 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE SEQUENCE client_contact_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE client_contact (id INT NOT NULL, telephone VARCHAR(20) NOT NULL, name VARCHAR(255) NOT NULL, adress VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('ALTER TABLE rent_beds ADD photofilename VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER INDEX idx_4680c931b81b56d4 RENAME TO IDX_4680C931E289A545');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP SEQUENCE client_contact_id_seq CASCADE');
-        $this->addSql('DROP TABLE client_contact');
+        $this->addSql('ALTER TABLE rent_beds DROP photofilename');
+        $this->addSql('ALTER INDEX idx_4680c931e289a545 RENAME TO idx_4680c931b81b56d4');
     }
 }

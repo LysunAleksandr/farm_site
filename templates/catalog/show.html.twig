@@ -107,18 +107,15 @@
                         <li><a href="#"><span>Availibility</span> : In Stock</a></li>
                     </ul>
                     <p>{{ catalog_unit.description }}</p>
-                    {{ form(add_basket_form) }}
+
+                    {{ form_start(add_basket_form) }}
                     <div class="product_count">
-                        <label for="qty">Quantity:</label>
-                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                    </div>
+                        {{ form_row(add_basket_form.quantity) }}
                     <div class="card_area">
+                        {{ form_widget(add_basket_form.submit, {'attr': {'class': 'main_btn'}}) }}
                         <a class="main_btn" href="#">Добавить в корзину</a>
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
                     </div>
+                    {{ form_end(add_basket_form) }}
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ class BasketPositionFormType extends AbstractType
     {
         $builder
             ->add('quantity', null, [
-                  'label' => 'quantity',
+//                  'label' => 'quantity',
                   ])
               ->add('submit', SubmitType::class)
         ;

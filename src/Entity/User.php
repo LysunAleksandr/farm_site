@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -49,6 +51,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[Assert\NotBlank]
     private ?string $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=RentBeds::class, mappedBy="Ğrenter")
+     */
+    private $rentBeds;
+
+    public function __construct()
+    {
+        $this->rentBeds = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +149,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->username;
+    }
+
+    /**
+     * @return Collection|RentBeds[]
+     */
+    public function getRentBeds(): Collection
+    {
+        return $this->rentBeds;
+    }
+
+    public function addRentBed(RentBeds $rentBed): self
+    {
+        if (!$this->rentBeds->contains($rentBed)) {
+            $this->rentBeds[] = $rentBed;
+            $rentBed->setĞrenter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRentBed(RentBeds $rentBed): self
+    {
+        if ($this->rentBeds->removeElement($rentBed)) {
+            // set the owning side to null (unless already changed)
+            if ($rentBed->getĞrenter() === $this) {
+                $rentBed->setĞrenter(null);
+            }
+        }
+
+        return $this;
     }
 
 }
