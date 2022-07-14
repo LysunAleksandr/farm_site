@@ -10,16 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
+
 
 class BasketPositionController extends AbstractController
 {
-    private $twig;
     private $entityManager;
 
-    public function __construct(Environment $twig, EntityManagerInterface $entityManager)
+    public function __construct( EntityManagerInterface $entityManager)
     {
-        $this->twig = $twig;
         $this->entityManager = $entityManager;
     }
 
@@ -30,7 +28,7 @@ class BasketPositionController extends AbstractController
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $basketPosition->getBasketPaginator($offset, $sessionId);
 
-        return new Response($this->twig->render('cart/index.html.twig', [
+        return new Response($this->render('cart/index.html.twig', [
             'basket_positions' => $paginator,
             'session' => $sessionId,
             'totalPrice' => $basketCalculator->getBasketPrice($sessionId),
@@ -49,20 +47,4 @@ class BasketPositionController extends AbstractController
 
     }
 
-    #[Route('/order', name: 'order')]
-    public function getOrder(Request $request, BasketPositionRepository $basketPosition, BasketCalcInterface $basketCalculator): Response
-    {
-        $sessionId = $request->getSession()->getId();
-        $offset = max(0, $request->query->getInt('offset', 0));
-        $paginator = $basketPosition->getBasketPaginator($offset, $sessionId);
-
-        return new Response($this->twig->render('order/index.html.twig', [
-            'basket_positions' => $paginator,
-            'session' => $sessionId,
-            'totalPrice' => $basketCalculator->getBasketPrice($sessionId),
-            'totalQuantity' =>  $basketCalculator->getBasketQuantity($sessionId),
-            'previous' => $offset - BasketPositionRepository::PAGINATOR_PER_PAGE,
-            'next' => min(count($paginator), $offset + BasketPositionRepository::PAGINATOR_PER_PAGE),
-        ]));
-    }
 }

@@ -50,7 +50,7 @@ class CatalogController extends AbstractController
         ]));
     }
 
-    #[Route('/{id}', name: 'item')]
+    #[Route('/catalog/{id}', name: 'item')]
     public function show(Request $request, Catalog $catalog, BasketCalcInterface $basketCalculator): Response
     {
         $sessionId = $request->getSession()->getId();
