@@ -88,4 +88,12 @@ class CatalogController extends AbstractController
 
     }
 
+    #[Route('/contact', name: 'contact')]
+    public function contact(): Response
+    {
+
+        return new Response($this->render('contact.html.twig'));
+
+    }
+
 }
