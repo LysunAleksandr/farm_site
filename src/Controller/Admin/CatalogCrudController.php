@@ -31,9 +31,7 @@ class CatalogCrudController extends AbstractCrudController
                 ->setBasePath('images')
                 ->setUploadDir('public/uploads/photos')
                 ->setRequired(false),
-//            yield ArrayField::new('ingridients'),
-//            yield AssociationField::new('Ingridient1'),
-            yield AssociationField::new('Ingr')
+
 
 
         ];

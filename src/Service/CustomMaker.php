@@ -6,7 +6,6 @@ namespace App\Service;
 
 use App\Entity\BasketPosition;
 use App\Entity\Catalog;
-use App\Entity\Ingridient;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CustomMaker implements CustomMakerInterface
@@ -25,16 +24,7 @@ class CustomMaker implements CustomMakerInterface
         $basketPosition->setTitle($catalog->getTitle());
         $basketPosition->setPrice(1000);
         $basketPosition->setQuantity($quantity);
-        $ingridients = $catalog->getIngr();
 
-        $i = 0;
-        foreach ($ingridients  as $ingridient) {
-            $basketPosition->addIngr($ingridient);
-            $i=$i+1;
-        }
-        if ($i == 0) {
-            throw new \RuntimeException('The ingredient field cannot be empty');
-        }
         return $basketPosition;
 
     }

@@ -88,4 +88,23 @@ class OrderController extends AbstractController
         ]));
     }
 
+    #[Route('/orders', name: 'orders')]
+    public function orders(Request $request, BasketPositionRepository $basketPositionRepository, BasketCalcInterface $basketCalculator, SessionInterface $sessionInterface): Response
+
+    {
+        $sessionId = $request->getSession()->getId();
+        $offset = max(0, $request->query->getInt('offset', 0));
+
+        $paginator = $basketPositionRepository->getBasketPaginator($offset, $sessionId);
+
+        return new Response($this->render('order/index.html.twig', [
+            'basket_positions' => $paginator,
+            'session' => $sessionId,
+            'totalPrice' => $basketCalculator->getBasketPrice($sessionId),
+            'totalQuantity' =>  $basketCalculator->getBasketQuantity($sessionId),
+            'previous' => $offset - BasketPositionRepository::PAGINATOR_PER_PAGE,
+            'next' => min(count($paginator), $offset + BasketPositionRepository::PAGINATOR_PER_PAGE),
+        ]));
+
+    }
 }
