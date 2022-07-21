@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
 {% block body %}
     <!--================Home Banner Area =================-->
     <section class="home_banner_area">
@@ -11,13 +14,21 @@
                         <a class="white_bg_btn" href={{ path('catalog') }}>Plant catalog</a>
                     </div>
                     <div class="col-lg-7">
-                        <div class="cvety_img">
-                            <img src="img/banner/cvety.jpeg" alt="">
-                        </div>
+                        {{ form_start(registrationForm) }}
+                        {{ form_row(registrationForm.username) }}
+                        {{ form_row(registrationForm.plainPassword, {
+                            label: 'Password'
+                        }) }}
+                        {{ form_row(registrationForm.agreeTerms) }}
+
+                        <button type="submit" class="main_btn">Register</button>
+                        {{ form_end(registrationForm) }}
                     </div>
                 </div>
             </div>
         </div>
     </section>
-{% endblock %}
 
+
+
+{% endblock %}

@@ -49,6 +49,11 @@ class RentBeds
      */
     private $photofilename;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -133,5 +138,17 @@ class RentBeds
     public function __toString(): string
     {
         return $this->title;// . ' ' . $this->description;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

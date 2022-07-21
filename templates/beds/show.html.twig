@@ -26,8 +26,12 @@
                     <p>{{ catalog_unit.description }}</p>
 
                     {{ form_start(add_basket_form) }}
-                    {{ form_row(add_basket_form.quantity) }}
-                    <button type="submit" class="main_btn">Добавить в корзину</button>
+                    <div class="product_count">
+                        {{ form_row(add_basket_form.quantity) }}
+                    <div class="card_area">
+                        {{ form_widget(add_basket_form.submit, {'attr': {'class': 'main_btn'}}) }}
+                        <a class="main_btn" href="#">Арендовать</a>
+                    </div>
                     {{ form_end(add_basket_form) }}
                 </div>
             </div>

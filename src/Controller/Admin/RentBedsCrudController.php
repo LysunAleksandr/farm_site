@@ -21,6 +21,7 @@ class RentBedsCrudController extends AbstractCrudController
     {
         return [
             yield TextField::new('title'),
+            yield TextField::new('description'),
             yield IntegerField::new('square'),
             yield Field ::new('price'),
             yield TextField::new('videolink'),
