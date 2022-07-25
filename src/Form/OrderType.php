@@ -12,12 +12,12 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date_at')
+//            ->add('date_at')
             ->add('username')
             ->add('adress')
             ->add('telehhone')
-            ->add('sessionID')
-            ->add('clientContact')
+//            ->add('sessionID')
+//            ->add('clientContact')
         ;
     }
 

@@ -9,13 +9,10 @@
                         <div class="right_page ml-auto">
                             <nav class="cat_page" aria-label="Page navigation example">
                                 <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item blank"><a class="page-link" href="#">...</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                    <li class="page-item"><a class="page-link" href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                                    <li class="page-item"><a class="page-link" href="{{ path('catalog', {  offset: previous }) }}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a></li>
+                                    {% if next < catalogs|length %}
+                                    <li class="page-item"><a class="page-link" href="{{ path('catalog', {  offset: next }) }}"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                                    {% endif %}
                                 </ul>
                             </nav>
                         </div>

@@ -53,6 +53,11 @@ class BasketPosition
      */
     private ?Order $orderN;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=RentBeds::class, inversedBy="basketPositions")
+     */
+    private $Beds;
+
     public function __construct()
     {
         $this->Ingr = new ArrayCollection();
@@ -141,6 +146,18 @@ class BasketPosition
     public function setOrderN(?Order $orderN): self
     {
         $this->orderN = $orderN;
+
+        return $this;
+    }
+
+    public function getBeds(): ?RentBeds
+    {
+        return $this->Beds;
+    }
+
+    public function setBeds(?RentBeds $Beds): self
+    {
+        $this->Beds = $Beds;
 
         return $this;
     }

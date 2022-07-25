@@ -6,6 +6,7 @@ use App\Entity\BasketPosition;
 use App\Entity\Catalog;
 use App\Entity\RentBeds;
 use App\Form\BasketPositionFormType;
+use App\Form\RentBedsType;
 use App\Repository\RentBedsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,9 +53,9 @@ class BedsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $basketPosition->setSessionID($sessionId);
-//            $basketPosition->setTitle($catalog->getTitle());
-//            $basketPosition->setPrice($catalog->getPrice());
-//            $basketPosition->setCatalog($catalog);
+            $basketPosition->setTitle($beds->getTitle());
+            $basketPosition->setPrice($beds->getPrice());
+            $basketPosition->setBeds($beds);
             $this->entityManager->persist($basketPosition);
             $this->entityManager->flush();
 

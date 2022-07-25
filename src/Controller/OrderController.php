@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class OrderController extends AbstractController
 {
@@ -25,10 +26,16 @@ class OrderController extends AbstractController
     }
 
     #[Route('/order', name: 'order')]
-    public function index(Request $request, BasketPositionRepository $basketPositionRepository, BasketCalcInterface $basketCalculator, SessionInterface $sessionInterface): Response
+    public function index(Request $request,
+                          BasketPositionRepository $basketPositionRepository,
+                          BasketCalcInterface $basketCalculator,
+                          SessionInterface $sessionInterface,
+                          Security $security
+    ): Response
 
      {
          $sessionId = $request->getSession()->getId();
+         $user = $security->getUser();
          $offset = max(0, $request->query->getInt('offset', 0));
 
          $order = new Order();

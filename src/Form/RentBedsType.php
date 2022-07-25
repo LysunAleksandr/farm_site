@@ -12,11 +12,11 @@ class RentBedsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('square')
-            ->add('price')
-            ->add('videolink')
-            ->add('renter')
+//            ->add('title')
+//            ->add('square')
+//            ->add('price')
+//            ->add('videolink')
+//            ->add('renter')
         ;
     }
 

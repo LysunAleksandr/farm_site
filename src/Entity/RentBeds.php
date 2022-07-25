@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\RentBedsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +55,16 @@ class RentBeds
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BasketPosition::class, mappedBy="Beds")
+     */
+    private $basketPositions;
+
+    public function __construct()
+    {
+        $this->basketPositions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -148,6 +160,36 @@ class RentBeds
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BasketPosition[]
+     */
+    public function getBasketPositions(): Collection
+    {
+        return $this->basketPositions;
+    }
+
+    public function addBasketPosition(BasketPosition $basketPosition): self
+    {
+        if (!$this->basketPositions->contains($basketPosition)) {
+            $this->basketPositions[] = $basketPosition;
+            $basketPosition->setBeds($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBasketPosition(BasketPosition $basketPosition): self
+    {
+        if ($this->basketPositions->removeElement($basketPosition)) {
+            // set the owning side to null (unless already changed)
+            if ($basketPosition->getBeds() === $this) {
+                $basketPosition->setBeds(null);
+            }
+        }
 
         return $this;
     }
