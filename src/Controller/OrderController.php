@@ -4,6 +4,8 @@ namespace App\Controller;
 
 
 use App\Entity\Order;
+use App\Entity\RentBeds;
+use App\Entity\User;
 use App\Form\OrderFormType;
 use App\Repository\BasketPositionRepository;
 use App\Service\BasketCalcInterface;
@@ -35,7 +37,8 @@ class OrderController extends AbstractController
 
      {
          $sessionId = $request->getSession()->getId();
-         $user = $security->getUser();
+         $username = $security->getUser()->getUserIdentifier();
+         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
          $offset = max(0, $request->query->getInt('offset', 0));
 
          $order = new Order();
@@ -45,17 +48,25 @@ class OrderController extends AbstractController
 
          if ($form->isSubmitted() && $form->isValid()) {
              $order->setCreatedAtValue();
+             $order->setUsername($sessionId);
+             $order->setUsers($user);
 
              $basketPositions = $basketPositionRepository->findBy(['sessionID' => $sessionId ]);
              foreach ($basketPositions  as $basketPosition) {
                  $order->addBasketposition($basketPosition);
+                 /**
+                  * @param RentBeds $bed
+                  */
+                 foreach ($basketPosition->getBeds() as $bed) {
+                     $bed->setRenter($user);
+                 }
              }
 
              $this->entityManager->persist($order);
              $this->entityManager->flush();
 
              $sessionInterface->invalidate();
-             return $this->redirectToRoute('ordered', ['id' =>  $order->getId()]);
+             return $this->redirectToRoute('cabinet', ['id' =>  $order->getId()]);
          }
 
 

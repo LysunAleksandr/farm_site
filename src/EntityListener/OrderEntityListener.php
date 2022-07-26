@@ -19,20 +19,7 @@ class OrderEntityListener
 
     public function prePersist(Order $order, LifecycleEventArgs $event)
     {
-        $telephone = $order->getTelehhone();
-        $client = $this->entityManager->getRepository(ClientContact::class)->findOneBy(['telephone' => $telephone] );
-        if (!$client) {
-            $clientContact = new ClientContact();
-            $clientContact->setTelephone($order->getTelehhone());
-            $clientContact->setName($order->getUsername());
-            $clientContact->setAdress($order->getAdress());
-            $this->entityManager->persist($clientContact);
-            $order->setClientContact($clientContact);
- //           $this->entityManager->flush();
-        }
-        else {
-            $order->setClientContact($client);
-        }
+
     }
 
     public function preUpdate(Order $order, LifecycleEventArgs $event)

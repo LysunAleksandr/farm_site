@@ -50,21 +50,7 @@ class Order
      */
     #[Groups(["read", "write"])]
     #[ApiFilter(SearchFilter::class, strategy: 'partial')]
-    private ?string $username;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    #[Groups(["read", "write"])]
-    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
-    private ?string $adress;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    #[Groups(["read", "write"])]
-    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
-    private ?string $telehhone;
+    private ?string $username = null;
 
     /**
      * @ORM\OneToMany(targetEntity=BasketPosition::class, mappedBy="orderN")
@@ -73,16 +59,9 @@ class Order
     private $basketposition;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ClientContact::class, inversedBy="OrderId")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
      */
-    private $clientContact;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    #[Groups(["read"])]
-    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
-    private ?string $sessionID;
+    private $users;
 
     public function __construct()
     {
@@ -123,7 +102,7 @@ class Order
         return $this->adress;
     }
 
-    public function setAdress(string $adress): self
+    public function setAdress(?string $adress): self
     {
         $this->adress = $adress;
 
@@ -135,7 +114,7 @@ class Order
         return $this->telehhone;
     }
 
-    public function setTelehhone(string $telehhone): self
+    public function setTelehhone(?string $telehhone): self
     {
         $this->telehhone = $telehhone;
 
@@ -207,6 +186,18 @@ class Order
     public function setSessionID(string $sessionID): self
     {
         $this->sessionID = $sessionID;
+
+        return $this;
+    }
+
+    public function getUsers(): ?User
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?User $users): self
+    {
+        $this->users = $users;
 
         return $this;
     }

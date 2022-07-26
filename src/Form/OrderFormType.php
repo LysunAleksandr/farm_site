@@ -16,16 +16,16 @@ class OrderFormType extends AbstractType
     {
         $builder
  //           ->add('date_at')
-            ->add('username', null, [
-                  'label' => 'Your name  ',
-                ])
-            ->add('adress', null, [
-                'label' => 'Delivery address  ',
-            ])
-            ->add('telehhone', TelType::class, [
-                'label' => 'Telephone  ', 'data' => '+79'
-            ])
-            ->add('submit', SubmitType::class)
+//            ->add('username', null, [
+//                  'label' => 'Your name  ',
+//                ])
+//            ->add('adress', null, [
+//                'label' => 'Delivery address  ',
+//            ])
+//            ->add('telehhone', TelType::class, [
+//                'label' => 'Telephone  ', 'data' => '+79'
+//            ])
+//            ->add('submit', SubmitType::class)
         ;
     }
 
