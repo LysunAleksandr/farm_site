@@ -37,7 +37,7 @@ class OrderController extends AbstractController
 
      {
          $sessionId = $request->getSession()->getId();
-         $username = $security->getUser()->getUserIdentifier();
+         $username = $security->getUser()?->getUserIdentifier();
          $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
          $offset = max(0, $request->query->getInt('offset', 0));
 
@@ -57,9 +57,14 @@ class OrderController extends AbstractController
                  /**
                   * @param RentBeds $bed
                   */
-                 foreach ($basketPosition->getBeds() as $bed) {
-                     $bed->setRenter($user);
+                 $beds = $basketPosition->getBeds();
+                 if (!$beds) {
+                     continue;
                  }
+                     if (!$beds instanceof RentBeds )  {
+                            continue;
+                     }
+                     $beds->setRenter($user);
              }
 
              $this->entityManager->persist($order);

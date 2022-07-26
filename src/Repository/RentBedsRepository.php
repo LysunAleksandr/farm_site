@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\RentBeds;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,7 +38,8 @@ class RentBedsRepository extends ServiceEntityRepository
     public function getBedsPaginatorForUser(int $offset, User $user = null): Paginator
     {
         $query = $this->createQueryBuilder('a')
-            ->where('a.renter IS NOT NULL')
+            ->where('a.renter  = :user')
+            ->setParameter('user', $user)
 //            ->setParameter('val', $user)
             ->orderBy('a.title', 'DESC')
             ->setMaxResults(self::PAGINATOR_PER_PAGE)
