@@ -43,7 +43,7 @@ class Catalog
     private ?string $description;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $square;
 
