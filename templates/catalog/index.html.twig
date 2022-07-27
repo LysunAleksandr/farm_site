@@ -18,19 +18,19 @@
                         </div>
                     </div>
                     <div class="latest_product_inner row">
-                    {% for catalog in catalogs %}
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <div class="f_p_item">
-                                <div class="f_p_img">
-                                    <img class="img-fluid" src="{{ asset('uploads/photos/' ~ catalog.photofilename) }}" alt="">
-                                    <div class="p_icon">
+                        {% for catalog in catalogs %}
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <div class="f_p_item">
+                                    <div class="f_p_img">
+                                        <img class="img-fluid" src="{{ asset('uploads/photos/' ~ catalog.photofilename) }}" alt="">
+                                        <div class="p_icon">
+                                        </div>
                                     </div>
+                                    <a href="{{ path('item', { id: catalog.id }) }}"><h4>{{ catalog }}</h4></a>
+                                    <h5>{{ catalog.price}}</h5>
                                 </div>
-                                <a href="{{ path('item', { id: catalog.id }) }}"><h4>{{ catalog }}</h4></a>
-                                <h5>{{ catalog.price}}</h5>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

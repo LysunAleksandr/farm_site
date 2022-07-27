@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\BasketPosition;
 use App\Entity\RentBeds;
 use App\Entity\User;
+use App\Form\BasketPositionEmptyFormType;
 use App\Form\BasketPositionFormType;
 use App\Repository\RentBedsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,27 +46,20 @@ class CabinetController extends AbstractController
 
     }
 
-    #[Route('/cabinet/{id}', name: 'itembedscabinet')]
+    #[Route('/cabinet/{id}', name: 'itemcabinet')]
     public function show(Request $request, RentBeds $beds): Response
     {
         $sessionId = $request->getSession()->getId();
         $basketPosition = new BasketPosition();
-        $form = $this->createForm(BasketPositionFormType::class, $basketPosition);
+        $form = $this->createForm(BasketPositionEmptyFormType::class, $basketPosition);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $basketPosition->setSessionID($sessionId);
-            $basketPosition->setTitle($beds->getTitle());
-            $basketPosition->setPrice($beds->getPrice());
-            $basketPosition->setBeds($beds);
-            $this->entityManager->persist($basketPosition);
-            $this->entityManager->flush();
-
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('cabinet');
         }
 
 
-        return new Response($this->render('beds/show.html.twig', [
+        return new Response($this->render('cabinet/show.html.twig', [
             'catalog_unit' => $beds,
             'session' => $sessionId,
 //            'totalPrice' => $basketCalculator->getBasketPrice($sessionId),

@@ -42,6 +42,11 @@ class Catalog
      */
     private ?string $description;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $square;
+
 
     public function __construct()
     {
@@ -107,6 +112,18 @@ class Catalog
     public function __toString(): string
     {
         return $this->title;// . ' ' . $this->description;
+    }
+
+    public function getSquare(): ?float
+    {
+        return $this->square;
+    }
+
+    public function setSquare(float $square): self
+    {
+        $this->square = $square;
+
+        return $this;
     }
 
 }

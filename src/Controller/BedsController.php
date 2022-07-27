@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\BasketPosition;
 use App\Entity\Catalog;
 use App\Entity\RentBeds;
+use App\Form\BasketPositionEmptyFormType;
 use App\Form\BasketPositionFormType;
 use App\Form\RentBedsType;
 use App\Repository\RentBedsRepository;
@@ -48,10 +49,11 @@ class BedsController extends AbstractController
     {
         $sessionId = $request->getSession()->getId();
         $basketPosition = new BasketPosition();
-        $form = $this->createForm(BasketPositionFormType::class, $basketPosition);
+        $form = $this->createForm(BasketPositionEmptyFormType::class, $basketPosition);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $basketPosition->setQuantity(1);
             $basketPosition->setSessionID($sessionId);
             $basketPosition->setTitle($beds->getTitle());
             $basketPosition->setPrice($beds->getPrice());

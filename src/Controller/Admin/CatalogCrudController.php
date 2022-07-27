@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -27,6 +28,7 @@ class CatalogCrudController extends AbstractCrudController
             yield TextField::new('title'),
             yield TextField::new('description'),
             yield Field ::new('price'),
+            yield IntegerField::new('square'),
             yield ImageField::new('photoFilename')
                 ->setBasePath('images')
                 ->setUploadDir('public/uploads/photos')

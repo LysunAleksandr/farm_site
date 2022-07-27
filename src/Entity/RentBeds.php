@@ -61,6 +61,11 @@ class RentBeds
      */
     private $basketPositions;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateEndRent;
+
     public function __construct()
     {
         $this->basketPositions = new ArrayCollection();
@@ -190,6 +195,18 @@ class RentBeds
                 $basketPosition->setBeds(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateEndRent(): ?\DateTimeInterface
+    {
+        return $this->dateEndRent;
+    }
+
+    public function setDateEndRent(?\DateTimeInterface $dateEndRent): self
+    {
+        $this->dateEndRent = $dateEndRent;
 
         return $this;
     }
