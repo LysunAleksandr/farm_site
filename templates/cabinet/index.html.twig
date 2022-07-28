@@ -35,4 +35,46 @@
             </div>
         </div>
     </section>
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Maturation period</th>
+                            <th scope="col">Bed</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for plant in plants %}
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+
+                                        </div>
+                                        <div class="media-body">
+                                            <p>{{ plant.catalog }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>{{ plant.quantity }}</h5>
+                                </td>
+                                <td>
+                                    <h5>{{ plant.dateEnd|date('Y-m-d') }}</h5>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

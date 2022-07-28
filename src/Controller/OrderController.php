@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 
+use App\Entity\Catalog;
 use App\Entity\Order;
+use App\Entity\Plant;
 use App\Entity\RentBeds;
 use App\Entity\User;
 use App\Form\OrderFormType;
@@ -54,7 +56,17 @@ class OrderController extends AbstractController
              $basketPositions = $basketPositionRepository->findBy(['sessionID' => $sessionId ]);
              foreach ($basketPositions  as $basketPosition) {
                  $order->addBasketposition($basketPosition);
-                 /**
+                 if ($basketPosition->getCatalog() instanceof Catalog) {
+                     $onDate = new \DateTimeImmutable('today');
+                     $plant = (new Plant())
+                         ->setUsers($user)
+                         ->setQuantity($basketPosition->getQuantity())
+                         ->setCatalog($basketPosition->getCatalog())
+                         ->setDateAt($onDate)
+                         ->setDateEnd($onDate->add(new \DateInterval('P60D')));
+                     $this->entityManager->persist($plant);
+                 }
+                     /**
                   * @param RentBeds $bed
                   */
                  $beds = $basketPosition->getBeds();
@@ -66,7 +78,6 @@ class OrderController extends AbstractController
                      }
                      $beds->setRenter($user);
              }
-
              $this->entityManager->persist($order);
              $this->entityManager->flush();
 

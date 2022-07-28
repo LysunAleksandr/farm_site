@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\BasketPosition;
+use App\Entity\Plant;
 use App\Entity\RentBeds;
 use App\Entity\User;
 use App\Form\BasketPositionEmptyFormType;
@@ -36,9 +37,12 @@ class CabinetController extends AbstractController
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
         $paginator = $repository->getBedsPaginatorForUser($offset, $user);
 
+        $plants =  $this->entityManager->getRepository(Plant::class)->findBy(['users' => $user]);
+
 
         return new Response($this->render('cabinet/index.html.twig', [
             'catalogs' => $paginator,
+            'plants' => $plants,
             'session' => $sessionId ,
             'previous' => $offset - RentBedsRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + RentBedsRepository::PAGINATOR_PER_PAGE),

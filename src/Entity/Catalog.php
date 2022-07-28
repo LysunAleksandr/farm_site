@@ -47,11 +47,17 @@ class Catalog
      */
     private $square;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Plant::class, mappedBy="catalog")
+     */
+    private $plants;
+
 
     public function __construct()
     {
         $this->basketPositions = new ArrayCollection();
         $this->Ingr = new ArrayCollection();
+        $this->plants = new ArrayCollection();
     }
 
 
@@ -122,6 +128,36 @@ class Catalog
     public function setSquare(float $square): self
     {
         $this->square = $square;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Plant[]
+     */
+    public function getPlants(): Collection
+    {
+        return $this->plants;
+    }
+
+    public function addPlant(Plant $plant): self
+    {
+        if (!$this->plants->contains($plant)) {
+            $this->plants[] = $plant;
+            $plant->setCatalog($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlant(Plant $plant): self
+    {
+        if ($this->plants->removeElement($plant)) {
+            // set the owning side to null (unless already changed)
+            if ($plant->getCatalog() === $this) {
+                $plant->setCatalog(null);
+            }
+        }
 
         return $this;
     }
