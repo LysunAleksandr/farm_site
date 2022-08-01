@@ -55,13 +55,13 @@ class BasketPositionRepository extends ServiceEntityRepository
     */
 
 
-    public function getBasket( $sessionId ):  ?BasketPosition
+    public function getBasket( $sessionId )
     {
         return $this->createQueryBuilder('b')
             ->andWhere('b.sessionID = :val')
             ->setParameter('val', $sessionId)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
             ;
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\Repository\BasketPositionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +25,10 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator,
+                                private BasketPositionRepository $basketPositionRepository,
+                                private EntityManagerInterface $entityManager
+    )
     {
         $this->urlGenerator = $urlGenerator;
     }
@@ -31,9 +36,15 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
     public function authenticate(Request $request): Passport
     {
         $username = $request->request->get('username', '');
-
+        $sessionId = $request->getSession()->getId();
         $request->getSession()->set(Security::LAST_USERNAME, $username);
 
+        $basketPositions = $this->basketPositionRepository->getBasket($sessionId);
+        foreach ($basketPositions as $basketPosition) {
+            $basketPosition->setSessionID($username);
+            $this->entityManager->persist($basketPosition);
+        }
+        $this->entityManager->flush();
         return new Passport(
             new UserBadge($username),
             new PasswordCredentials($request->request->get('password', '')),
@@ -48,6 +59,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
+
 
         // For example:
         //return new RedirectResponse($this->urlGenerator->generate('some_route'));

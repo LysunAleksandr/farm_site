@@ -52,14 +52,10 @@ RUN pecl update-channels && \
     pecl install pcov && \
     docker-php-ext-enable pcov && \
     pecl install amqp && \
-    docker-php-ext-enable amqp
+    docker-php-ext-enable amqp \
+    pecl install xdebug && \
+    docker-php-ext-enable xdebug
 
-RUN set -eux; \
-    apk add --no-cache --virtual .build-deps $PHPIZE_DEPS; \
-    pecl install pcov; \
-    pecl install xdebug; \
-    docker-php-ext-enable xdebug pcov; \
-    apk del --no-network .build-deps \
 
 RUN apk add gnu-libiconv --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
