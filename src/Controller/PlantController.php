@@ -12,10 +12,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-class CabinetController extends AbstractController
+class PlantController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
 
@@ -25,7 +26,7 @@ class CabinetController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/cabinet', name: 'cabinet')]
+    #[Route('/plant', name: 'plant')]
     public function index(Request $request,
                           RentBedsRepository $repository,
                           Security $security): Response
@@ -39,7 +40,7 @@ class CabinetController extends AbstractController
         $plants =  $this->entityManager->getRepository(Plant::class)->findBy(['users' => $user]);
 
 
-        return new Response($this->render('cabinet/index.html.twig', [
+        return new Response($this->render('plant/index.html.twig', [
             'catalogs' => $paginator,
             'plants' => $plants,
             'session' => $sessionId ,
@@ -49,27 +50,19 @@ class CabinetController extends AbstractController
 
     }
 
-    #[Route('/cabinet/{id}', name: 'itemcabinet')]
-    public function show(Request $request, RentBeds $beds): Response
+    #[Route('/plant/{id}', name: 'planted')]
+    public function show(RentBeds $beds,
+                         $id,
+                         Security $security): RedirectResponse
     {
-        $sessionId = $request->getSession()->getId();
-        $basketPosition = new BasketPosition();
-        $form = $this->createForm(BasketPositionEmptyFormType::class, $basketPosition);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->redirectToRoute('cabinet');
-        }
 
 
-        return new Response($this->render('cabinet/show.html.twig', [
-            'catalog_unit' => $beds,
-            'session' => $sessionId,
-//            'totalPrice' => $basketCalculator->getBasketPrice($sessionId),
-//            'totalQuantity' =>  $basketCalculator->getBasketQuantity($sessionId),
-//            'ingridients' => $catalog->getIngr(),
-            'add_basket_form' => $form->createView(),
-        ]));
+
+
+
+
+        return $this->redirectToRoute('cabinet', [] );
     }
+
 
 }

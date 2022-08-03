@@ -10,21 +10,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 
 class BasketPositionController extends AbstractController
 {
     private $entityManager;
 
-    public function __construct( EntityManagerInterface $entityManager)
+    public function __construct( EntityManagerInterface $entityManager,
+                                 )
     {
         $this->entityManager = $entityManager;
     }
 
     #[Route('/cart', name: 'cart')]
-    public function index(Request $request, BasketPositionRepository $basketPosition, BasketCalcInterface $basketCalculator): Response
+    public function index(Request $request,
+                          BasketPositionRepository $basketPosition,
+                          BasketCalcInterface $basketCalculator,
+                          Security $security): Response
     {
         $sessionId = $request->getSession()->getId();
+        $username = $security->getUser()?->getUserIdentifier();
+        if ($username) {
+            $sessionId  = $username;
+        }
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $basketPosition->getBasketPaginator($offset, $sessionId);
 

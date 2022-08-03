@@ -68,6 +68,15 @@
                                 <td>
                                     <h5>{{ plant.dateEnd|date('Y-m-d') }}</h5>
                                 </td>
+                                <td>
+                                    {% if plant.bed %}
+                                    <h5>{{ plant.bed }}</h5>
+                                    {% else %}
+                                        <p>
+                                            <a href="{{ path('plant', { id: plant.id }) }}">To plant</a>
+                                        </p>
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
 

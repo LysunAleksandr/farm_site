@@ -28,6 +28,7 @@ class BasketPositionRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('d')
             ->andWhere('d.sessionID = :sessionid')
             ->setParameter('sessionid', $sessionId)
+            ->andWhere('d.orderN IS NULL')
             ->orderBy('d.title', 'DESC')
             ->setMaxResults(self::PAGINATOR_PER_PAGE)
             ->setFirstResult($offset)

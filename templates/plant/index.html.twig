@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <!--================Category Product Area =================-->
+    <section class="cat_product_area p_120">
+        <div class="container">
+            <div class="row flex-row-reverse">
+                <div class="col-lg-12">
+                    <div class="product_top_bar">
+                        <div class="right_page ml-auto">
+                            <nav class="cat_page" aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="{{ path('cabinet', {  offset: previous }) }}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a></li>
+                                    {% if next < catalogs|length %}
+                                        <li class="page-item"><a class="page-link" href="{{ path('cabinet', {  offset: next }) }}"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="latest_product_inner row">
+                        {% for catalog in catalogs %}
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <div class="f_p_item">
+                                    <div class="f_p_img">
+                                        <img class="img-fluid" src="{{ asset('uploads/photos/' ~ catalog.photofilename) }}" alt="">
+                                        <div class="p_icon">
+                                        </div>
+                                    </div>
+                                    <a href="{{ path('planted', { id: catalog.id }) }}"><h4>{{ catalog }}</h4></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
