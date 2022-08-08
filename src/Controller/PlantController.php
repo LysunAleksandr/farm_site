@@ -60,13 +60,11 @@ class PlantController extends AbstractController
                          $plantID,
                          Request $request,
                          RentBedsRepository $repository,
-                         Security $security): RedirectResponse
+                         Security $security): Response
     {
         $plant =  $this->entityManager->getRepository(Plant::class)->findOneBy(['id' => $plantID]);
         $bed = $this->entityManager->getRepository(RentBeds::class)->findOneBy(['id' => $id]);
-        $catalogID = $plant->getCatalog() ?? null;
-        $catalog = $this->entityManager->getRepository(Catalog::class)->findOneBy(['id' => $catalogID]);
-        $square = $catalog->getSquare() ?? 0;
+        $square = $plant->getSquare() ?? 0;
         $freSquare = $bed->getFreeSquare() ?? 0;
         $tottalFreeSquare = $freSquare - $square;
         if ($tottalFreeSquare >= 0) {
@@ -78,27 +76,11 @@ class PlantController extends AbstractController
             return $this->redirectToRoute('cabinet', []);
         }
         else {
-            $offset = max(0, $request->query->getInt('offset', 0));
-            $sessionId = $request->getSession()->getId();
-            $username = $security->getUser()?->getUserIdentifier();
-            $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
-            $paginator = $repository->getBedsPaginatorForUser($offset, $user);
-            $plantID = $id;
-            $plants =  $this->entityManager->getRepository(Plant::class)->findBy(['users' => $user]);
-
-
-            return new RedirectResponse($this->render('plant/index.html.twig', [
-                'plantID' => $plantID,
-                'catalogs' => $paginator,
-                'plants' => $plants,
-                'errorMess' => 'there is not enough space on the bed ' . $id,
-                'session' => $sessionId ,
-                'previous' => $offset - RentBedsRepository::PAGINATOR_PER_PAGE,
-                'next' => min(count($paginator), $offset + RentBedsRepository::PAGINATOR_PER_PAGE),
+            return new Response($this->render('plant/show.html.twig', [
+                'catalog_unit' => $bed,
+                'needSquare' => $square
             ]));
-
         }
     }
-
 
 }

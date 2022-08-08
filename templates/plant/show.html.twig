@@ -17,13 +17,13 @@
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
+                    <h2> Not enough space </h2>
                     <h3>{{ catalog_unit.title }}</h3>
-                    <h2> Price: {{ catalog_unit.price}}</h2>
-                    <h2> Square: {{ catalog_unit.square}}</h2>
-                    <p>{{ catalog_unit.description }}</p>
-                    {{ form_start(add_basket_form) }}
-                    <button type="submit" class="main_btn">Добавить в корзину</button>
-                    {{ form_end(add_basket_form) }}
+                    <h2> Space required: {{ needSquare }}</h2>
+                    <h2> FreeSquare: {{ catalog_unit.freeSquare}}</h2>
+                    <div class="col-lg-4">
+                        <a class="main_btn" href={{ path('cabinet') }}>Cabinet</a>
+                    </div>
 
                 </div>
             </div>

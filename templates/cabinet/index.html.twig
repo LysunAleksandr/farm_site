@@ -46,6 +46,7 @@
                             <th scope="col">Product</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Maturation period</th>
+                            <th scope="col">Square</th>
                             <th scope="col">Bed</th>
                         </tr>
                         </thead>
@@ -67,6 +68,9 @@
                                 </td>
                                 <td>
                                     <h5>{{ plant.dateEnd|date('Y-m-d') }}</h5>
+                                </td>
+                                <td>
+                                    <h5>{{ plant.square }}</h5>
                                 </td>
                                 <td>
                                     {% if plant.bed %}

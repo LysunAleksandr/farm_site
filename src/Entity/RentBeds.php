@@ -165,7 +165,7 @@ class RentBeds
 
     public function __toString(): string
     {
-        return $this->title;// . ' ' . $this->description;
+        return $this->title . ' free: ' . $this->getFreeSquare();// . ' ' . $this->description;
     }
 
     public function getDescription(): ?string

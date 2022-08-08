@@ -63,7 +63,8 @@ class OrderController extends AbstractController
                          ->setQuantity($basketPosition->getQuantity())
                          ->setCatalog($basketPosition->getCatalog())
                          ->setDateAt($onDate)
-                         ->setDateEnd($onDate->add(new \DateInterval('P60D')));
+                         ->setDateEnd($onDate->add(new \DateInterval('P60D')))
+                         ->setSquare($basketPosition->getCatalog()->getSquare() * $basketPosition->getQuantity());
                      $this->entityManager->persist($plant);
                  }
                      /**

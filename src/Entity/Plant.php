@@ -50,6 +50,11 @@ class Plant
      */
     private $dateEnd;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $square;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -125,6 +130,18 @@ class Plant
     public function setDateEnd(?\DateTimeImmutable $dateEnd): self
     {
         $this->dateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    public function getSquare(): ?int
+    {
+        return $this->square;
+    }
+
+    public function setSquare(?int $square): self
+    {
+        $this->square = $square;
 
         return $this;
     }
