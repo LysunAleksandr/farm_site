@@ -1,8 +1,30 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <!--================Home Banner Area =================-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="container">
+                <div class="banner_content text-center">
+                    <h2>Сhoose a bed for planting</h2>
+                    <div class="page_link">
+                        <a href={{ path('homepage') }}>Home</a>
+                        <a href={{ path('cabinet') }}>Cabinet</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Home Banner Area =================-->
     <!--================Category Product Area =================-->
     <section class="cat_product_area p_120">
         <div class="container">
+            {% if errorMess != null  %}
+            <div class="returning_customer">
+                <div class="check_title">
+                    <h2>{{ errorMess }}</h2>
+                </div>
+            </div>
+            {% endif %}
             <div class="row flex-row-reverse">
                 <div class="col-lg-12">
                     <div class="product_top_bar">
@@ -26,7 +48,7 @@
                                         <div class="p_icon">
                                         </div>
                                     </div>
-                                    <a href="{{ path('planted', { id: catalog.id }) }}"><h4>{{ catalog }}</h4></a>
+                                    <a href="{{ path('planted',{ plantID: plantID, id: catalog.id }) }}"><h4>{{ catalog }}</h4></a>
                                 </div>
                             </div>
                         {% endfor %}

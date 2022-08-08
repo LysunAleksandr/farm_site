@@ -71,6 +71,11 @@ class RentBeds
      */
     private $plants;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $freeSquare;
+
     public function __construct()
     {
         $this->basketPositions = new ArrayCollection();
@@ -243,6 +248,18 @@ class RentBeds
                 $plant->setBed(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFreeSquare(): ?int
+    {
+        return $this->freeSquare;
+    }
+
+    public function setFreeSquare(?int $freeSquare): self
+    {
+        $this->freeSquare = $freeSquare;
 
         return $this;
     }
